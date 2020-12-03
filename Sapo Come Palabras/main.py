@@ -6,6 +6,7 @@ import numpy as np
 from pygame.locals import *
 from escenario import *
 from boton import *
+from Game import *
 
 WIDTH=640
 HEIGHT=480
@@ -16,23 +17,31 @@ def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Sapo come palabras")
+
     escenario01 = Escenario(0, 0, WIDTH, HEIGHT)
     escenario01.update_image("Images/Fondos/swamp_01.jpg")
-
     #botones
 
     boton01 = Boton(270,190,100,100)
     boton01.update_image("Images/Botones/0.png")
+    escenario01.agregar_boton(boton01)
 
     botonRight = Boton(470,190,100,100)
     botonRight.update_image("Images/Botones/7.png")
+    escenario01.agregar_boton(botonRight)
 
     botonLeft = Boton(70,190,100,100)
     botonLeft.update_image("Images/Botones/8.png")
+    escenario01.agregar_boton(botonLeft)
 
     botonExit = Boton(540,20,70,70)
     botonExit.update_image("Images/Botones/33.png")
-    """Error con la UI"""
+    escenario01.agregar_boton(botonExit)
+    
+    juego = Game(screen)
+    juego.Agregar_Escenario(escenario01)
+    juego.Cambiar_Escenario(0)
+
     botonExit.set_scenario(0, 0, 560, 400,"Images/Recursos/ventana_emergente.png")
     #fin declaracion botones
 
@@ -47,8 +56,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-        screen.blit(escenario01.image2, (escenario01.x, escenario01.y))
-        #__________________________________________BOTON
+        juego.Mostrar_Escenario()
+        #____BOTON
         # Toda la parte de control del boton esta en una funcion
         # solo en caso de hcer un click botara un True de esta 
         # manera se le puede dar diferentes funcionalidades al 

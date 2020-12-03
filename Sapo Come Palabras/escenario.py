@@ -2,6 +2,7 @@ import pygame
 import pygame as pg
 import numpy as np
 class Escenario(pygame.sprite.Sprite):
+    Botones = []
     def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
@@ -17,3 +18,5 @@ class Escenario(pygame.sprite.Sprite):
         self.height = height 
         img2 = pg.transform.scale(self.image1, (self.width, self.height))
         self.image2 = img2
+    def agregar_boton(self, bot):
+        self.Botones.append(bot)

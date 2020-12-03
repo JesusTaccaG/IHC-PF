@@ -49,7 +49,7 @@ class Boton(pygame.sprite.Sprite):
     """Error al definir la UI"""
     def set_scenario(self,x,y,width,height,ui):
         self.ventana = Escenario(x,y,width,height)
-        self.ventana(ui)
+        self.ventana.update_image(ui)
     #_________________________________________________Funcion para manejar todo  el funciona miento de boton
     def status(self,screen):
         mouse_pos = pygame.mouse.get_pos()
