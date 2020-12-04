@@ -66,13 +66,14 @@ class Nenufar(pygame.sprite.Sprite):
             if self.mouseOver==False:
                 #self.sound_p()
                 self.update_size(self.width+5, self.height+5)
+                self.actual=self.image5
                 self.mouseOver=True
             #Habilitar el click si no esta siendo presonado
             if False==click[0] and self.disableClick==True:
                 self.disableClick=False
             #Comprobar si se hace click dentro del boton
             if True==click[0] and self.disableClick==False:
-                self.actual=self.image5
+                #self.actual=self.image5
                 #nenufar.update_image('Images/Recursos/nenufar_celeste.png')
                 self.mouseClick=True
             #Comprobar si se suelta el click mientras esta dentro del boton [[[[ Accionl boton ]]]]
@@ -92,6 +93,7 @@ class Nenufar(pygame.sprite.Sprite):
             #Efecto desagrandar boton
             if self.mouseOver==True:
                 self.update_size(self.width-5, self.height-5)
+                self.actual=self.image4
                 self.mouseOver=False
     def letreros(self):
         letrero_pos = pygame.mouse.get_pos()
