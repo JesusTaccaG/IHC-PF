@@ -13,20 +13,23 @@ from nenufar import *
 import threading
 import glob
 from Cartel import *
+from boton import *
 WIDTH=640
 HEIGHT=480
 def armar_modo_02():
     mon_mus = Monita_Musical(50,50,100,100)
     mon_mus.update_image('Images/Personajes/mensajero.png')
     mon_mus.update_audio('sounds/Palabras/palabra_01.mp3')
-    sap = Frog(270,190,50,50,"Images/Personajes/ranita.png")
+    sap = Frog(170,370,100,100,"Images/Personajes/ranita.png")
+    nenu_sapo = Boton(145,340,150,150)
+    nenu_sapo.update_image("Images/Recursos/nenufar.png")
     fuente = pygame.font.Font(None, 25)
     numero_de_fotogramas = 0
     tasa_fotogramas = 60
     tiempo_segundos = 90
     cartel = Cartel(WIDTH-250,HEIGHT-150,250,150,fuente,numero_de_fotogramas,tasa_fotogramas,tiempo_segundos)
     cartel.update_image("Images/Recursos/cartel.png")
-    Mod = Modalidad_01(0,0,WIDTH,HEIGHT,sap,mon_mus, cartel)
+    Mod = Modalidad_01(0,0,WIDTH,HEIGHT,sap,mon_mus, cartel,[nenu_sapo])
     Mod.update_image('Images/Fondos/lake_02.png')
     A = ['pro','ba','ble','men','te']
     posx=0

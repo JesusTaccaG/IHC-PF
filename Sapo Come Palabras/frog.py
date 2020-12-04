@@ -84,4 +84,4 @@ class Frog(pygame.sprite.Sprite):
                 self.mouseOver=False
     #_________________________________________________Funcion para cambiar de escena manualmente
     def jump(self,screen,x,y):
-        self.update_pos(x+10,y)
+        self.update_pos(x,y-30)

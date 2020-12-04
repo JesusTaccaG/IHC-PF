@@ -21,7 +21,7 @@ class Escenario(pygame.sprite.Sprite):
     def agregar_boton(self, bot):
         self.Botones.append(bot)
 class Modalidad_01(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, sap, mon_mus, cart):
+    def __init__(self, x, y, width, height, sap, mon_mus, cart,img_sueltas):
         self.x = x
         self.y = y
         self.width = width
@@ -31,6 +31,7 @@ class Modalidad_01(pygame.sprite.Sprite):
         self.Monita_Musical = mon_mus
         self.Nenufares = []
         self.Botones = []
+        self.img_sueltas = img_sueltas
         self.Nivel = 1
     def agregar_nenufar(self, nenu):
         self.Nenufares.append(nenu)
@@ -50,6 +51,8 @@ class Modalidad_01(pygame.sprite.Sprite):
         for i in self.Nenufares:
             i.draw(buffer)
         for i in self.Botones:
+            i.draw(buffer)
+        for i in self.img_sueltas:
             i.draw(buffer)
         self.Cartel.draw(buffer)
         self.Sapo.draw(buffer)
