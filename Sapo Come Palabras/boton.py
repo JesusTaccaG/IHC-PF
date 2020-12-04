@@ -3,7 +3,7 @@ import pygame as pg
 import numpy as np
 from escenario import *
 class Boton(pygame.sprite.Sprite):
-    #_________________________________________________inicializador
+    dirige = None
     def __init__(self, x, y, width, height):
         #tamaño
         self.x = x
@@ -42,18 +42,13 @@ class Boton(pygame.sprite.Sprite):
             if pos[1] > self.y and pos[1] < self.y + self.height:
                 return True
     #_________________________________________________Reproducir sonido
-    """Sigue habiendo problema de delay"""
     def sound_p(self):
         self.sound.play()
-    #_________________________________________________Agregar ventana a boton
-    """Error al definir la UI"""
-    def set_scenario(self,x,y,width,height,ui):
-        self.ventana = Escenario(x,y,width,height)
-        self.ventana.update_image(ui)
+    def agregar_direccion(self, temp):
+        self.dirige = temp
     #_________________________________________________Funcion para manejar todo  el funciona miento de boton
-    def status(self,screen):
+    def status(self,Game):
         mouse_pos = pygame.mouse.get_pos()
-        self.draw(screen)
         click = pygame.mouse.get_pressed()
         if True==self.isOver(mouse_pos):
             #Efecto agrandar boton
@@ -87,40 +82,10 @@ class Boton(pygame.sprite.Sprite):
                 self.update_size(self.width-5, self.height-5)
                 self.mouseOver=False
     #_________________________________________________Funcion para cambiar de escena manualmente
-    def change_scene_on_click(self,screen,scene,ui):
-        if True == self.status(screen):
-            scene.update_image(ui)
-    #_________________________________________________Funcion para cambiar una lista de escenas a la derecha
-    def change_scene_lst_to_right(self,screen,escenario,lst_pos,scenarios_lst):
-        if True == self.status(screen):
-            if lst_pos >= len(scenarios_lst):
-                lst_pos=len(scenarios_lst)-1 
-            if lst_pos+1 < len(scenarios_lst):
-                lst_pos+=1
-                print(scenarios_lst[lst_pos])
-                escenario.update_image(scenarios_lst[lst_pos])
-        return lst_pos
-    #_________________________________________________Funcion para cambiar una lista de escenas a la izquierda
-    def change_scene_lst_to_left(self,screen,escenario,lst_pos,scenarios_lst):
-        if True == self.status(screen):
-            if lst_pos < 0:
-                lst_pos = 0
-            if lst_pos-1 >= 0:
-                lst_pos-=1
-                print(scenarios_lst[lst_pos])
-                escenario.update_image(scenarios_lst[lst_pos])
-        return lst_pos
-    #_________________________________________________Salir del juego
     def exit(self,screen):
         if True == self.status(screen):
             sys.exit()
-    #_________________________________________________Salir del juego
-    """Aun esta en beta, no se puede quitar la 
-    ventana ni hacer que desaparesca lo que esta 
-    por detras, ya que esto conlleva configurar 
-    la clase de escenario y el main creo yo"""
-    def show_vent(self,screen):
+    def Pause(self,screen):
         if True == self.status(screen):
-            self.IsActiveVent = True
-        if self.IsActiveVent==True and self.ventana!=None:
-            screen.blit(self.ventana.image2, (self.ventana.x, self.ventana.y))
+            return True
+        return False

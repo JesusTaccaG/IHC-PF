@@ -7,6 +7,11 @@ from pygame.locals import *
 from escenario import *
 from boton import *
 from Game import *
+from monita_musical import *
+from config import *
+from nenufar import *
+from frog import *
+import threading
 
 WIDTH=640
 HEIGHT=480
@@ -15,7 +20,6 @@ def main():
     pygame.mixer.pre_init(44100, -16, 2, 512)
     pygame.mixer.init()
     pygame.init()
-    screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Sapo come palabras")
 
     escenario01 = Escenario(0, 0, WIDTH, HEIGHT)
@@ -38,46 +42,91 @@ def main():
     botonExit.update_image("Images/Botones/33.png")
     escenario01.agregar_boton(botonExit)
     
-    juego = Game(screen)
+    juego = config_game()
     juego.Agregar_Escenario(escenario01)
-    juego.Cambiar_Escenario(0)
 
-    botonExit.set_scenario(0, 0, 560, 400,"Images/Recursos/ventana_emergente.png")
+    #botonExit.set_scenario(0, 0, 560, 400,"Images/Recursos/ventana_emergente.png")
     #fin declaracion botones
 
     pygame.key.set_repeat(1, 80)
     clock = pygame.time.Clock()
 
-    scenarios_lst=["Images/Fondos/swamp_01.jpg","Images/Fondos/river_01.jpg","Images/Fondos/river_02.jpg","Images/Fondos/lake_01.jpg"]
-    scene_pos = 0
-    
+    MoMu = Monita_Musical(50,50,100,100)
+    MoMu.update_image('Images/Personajes/mensajero.png')
+    MoMu.update_audio('sounds/Palabras/palabra_01.mp3')
+    juego.Escenario_Actual.agregar_boton(MoMu)
+
+    nenu = Nenufar(250,250,100,100)
+    nenu.update_image('Images/Recursos/nenufar.png','Images/Recursos/nenufar_celeste.png','Images/Recursos/letrero_individual.png')
+    juego.Escenario_Actual.agregar_boton(nenu)
+
+    GP=False
+    SUBCW=560
+    SUBCH=400
+    opacador = Escenario(0, 0, WIDTH, HEIGHT)
+    opacador.update_image("Images/Recursos/opacador.png")
+
+    escenarioPaused = Escenario(WIDTH/2-(SUBCW/2), HEIGHT/2-(SUBCH/2), SUBCW, SUBCH)
+    escenarioPaused.update_image("Images/Recursos/ventana_emergente.png")
+
+    subBotones=4
+
+    botonConfig = Boton((SUBCW/2)-SUBCW/4,160,60,60)
+    botonConfig.update_image("Images/Botones/32.png")
+    escenarioPaused.agregar_boton(botonConfig)
+
+    botonRestart = Boton((SUBCW/2)-SUBCW/4,230,60,60)
+    botonRestart.update_image("Images/Botones/36.png")
+    escenarioPaused.agregar_boton(botonRestart)
+
+    botonSalir = Boton((SUBCW/2)-SUBCW/4,300,60,60)
+    botonSalir.update_image("Images/Botones/8.png")
+    escenarioPaused.agregar_boton(botonSalir)
+
+    botonExit_P = Boton(SUBCW,HEIGHT-SUBCH,60,60)
+    botonExit_P.update_image("Images/Botones/33.png")
+    escenarioPaused.agregar_boton(botonExit_P)
+
+    rana = Frog(270,190,150,150,"Images/Personajes/ranita.png")
+
+
     while True:
         tick = clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-        juego.Mostrar_Escenario()
-        #____BOTON
-        # Toda la parte de control del boton esta en una funcion
-        # solo en caso de hcer un click botara un True de esta 
-        # manera se le puede dar diferentes funcionalidades al 
-        # boton con un solo if
-        
-        #----cambiar a escena cualquiera
-        #boton01.change_scene_on_click(screen,escenario01,"Images/Fondos/lake_01.jpg")
-        #----cambiar a escenas con lista de derecha a izquierda
-        #scene_pos = botonRight.change_scene_lst_to_right(screen,escenario01,scene_pos,scenarios_lst)
-        #scene_pos = botonLeft.change_scene_lst_to_left(screen,escenario01,scene_pos,scenarios_lst)
-        #----Salir del juego
-        #botonExit.exit(screen)
+        juego.Mostrar_Escenario(juego.screen)
+        if GP == True:
+            #el juego esta pausado
 
-        """funcion con ventana emergente con errores"""
-        """botonExit.show_vent(screen)"""
-
-        if True == boton01.status(screen):
-            print("po lo que quieres que haga el boton aqui")
-            #aqui va lo que quieres que haga el boton
-        #__________________________________________BOTON____________FIN
+            #opacador
+            juego.screen.blit(opacador.image2, (opacador.x, opacador.y))
+            #mostrar subventana
+            juego.screen.blit(escenarioPaused.image2, (escenarioPaused.x, escenarioPaused.y))
+            #subbotones sin funcion
+            escenarioPaused.Botones[0].status(juego.screen)
+            escenarioPaused.Botones[0].draw(juego.screen)
+            escenarioPaused.Botones[1].status(juego.screen)
+            escenarioPaused.Botones[1].draw(juego.screen)
+            escenarioPaused.Botones[2].status(juego.screen)
+            escenarioPaused.Botones[2].draw(juego.screen)
+            escenarioPaused.Botones[3].draw(juego.screen)
+            #subboton de salir de subventana
+            if escenarioPaused.Botones[3].status(juego.screen):
+                GP = False
+        else:
+            #el juego esta corriendo
+            GP=escenario01.Botones[3].Pause(juego.screen)
+            escenario01.Botones[3].draw(juego.screen)
+            hilo_1 = threading.Thread(target=MoMu.si_clickea())
+            hilo_1.start()
+            hilo_2 = threading.Thread(target= nenu.nenufar_click())
+            hilo_2.start()
+            #rana en pantalla
+            xn = random.randrange(0,600)
+            yn = random.randrange(0,440)
+            rana.Croak()
+            rana.jump(juego.screen,xn,yn)
         pygame.display.flip()
 
 
