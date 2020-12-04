@@ -85,6 +85,12 @@ def main():
     game_scene=[0,0]
     juego.Cambiar_Escenario(game_scene[0],game_scene[1])
     cambio_de_pantalla=False
+
+    bool_sapo=True
+
+    sans = pygame.mixer.Sound ( 'sounds/Alejandro Sans.mp3')
+    sans.play()
+    sans.set_volume(0.01)
     while True:
         tick = clock.tick(60)
         for event in pygame.event.get():
@@ -108,6 +114,8 @@ def main():
             escenarioPaused.Botones[1].draw(juego.screen)
             escenarioPaused.Botones[2].draw(juego.screen)
             if escenarioPaused.Botones[2].status(juego.screen):
+                juego.Escenario_Actual.Sapo.undecreace()
+                bool_sapo=False
                 game_scene=[0,0]
                 cambio_de_pantalla=True
                 GP = False
@@ -122,6 +130,9 @@ def main():
                 hilo_1.start()
                 for i in juego.Escenario_Actual.Nenufares:
                     if i.nenufar_click():
+                        if bool_sapo==True:
+                            juego.Escenario_Actual.Sapo.decreace(20)
+                            bool_sapo=False
                         xn=i.x+10
                         yn=i.y+30
                         juego.Escenario_Actual.Sapo.jump(juego.screen,xn,yn)

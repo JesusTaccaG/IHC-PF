@@ -20,7 +20,7 @@ class Boton(pygame.sprite.Sprite):
         self.ventana = None
         #Sonidos
         self.sound = pygame.mixer.Sound ( 'sounds/button.mp3')
-        self.sound.set_volume(0.3)
+        self.sound.set_volume(0.2)
     #_________________________________________________Cambiar iamgen de boton
     def update_image(self, ui):
         img = pygame.image.load(ui)

@@ -18,7 +18,7 @@ class Monita_Musical(pygame.sprite.Sprite):
         self.image2 = img2
     def update_audio(self, ua):
         self.audio = pygame.mixer.Sound(ua)
-        self.audio.set_volume(1)
+        self.audio.set_volume(0.2)
     def volumen(self, vol):
         self.audio.set_volume(vol)
     def update_size(self, width, height):
