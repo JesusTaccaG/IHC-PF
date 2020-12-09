@@ -26,12 +26,7 @@ class Game(pygame.sprite.Sprite):
             self.tipo = 3
              
     def Mostrar_Escenario(self):
-        if self.tipo==0: 
-            self.screen.blit(self.Escenario_Actual.image2, (self.Escenario_Actual.x, self.Escenario_Actual.y))
-            for i in self.Escenario_Actual.Botones:
-                i.draw(self.screen)
-        elif self.tipo==3:
-            self.Escenario_Actual.draw(self.screen)
+        self.Escenario_Actual.draw(self.screen)
     def Agregar_M_00(self, esc):
         self.M_00.append(esc)
     def Agregar_M_01(self, esc):

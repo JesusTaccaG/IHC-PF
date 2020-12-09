@@ -21,6 +21,8 @@ class Boton(pygame.sprite.Sprite):
         #Sonidos
         self.sound = pygame.mixer.Sound ( 'sounds/button.mp3')
         self.sound.set_volume(0.2)
+        self.esc_camb = None
+        self.tipo = None
     #_________________________________________________Cambiar iamgen de boton
     def update_image(self, ui):
         img = pygame.image.load(ui)
@@ -47,7 +49,20 @@ class Boton(pygame.sprite.Sprite):
     def agregar_direccion(self, temp):
         self.dirige = temp
     #_________________________________________________Funcion para manejar todo  el funciona miento de boton
-    def status(self,Game):
+    def exit(self,screen):
+        if True == self.status(screen):
+            sys.exit()
+    """
+    def Pause(self,screen):
+        if True == self.status(screen):
+            return True
+        return False"""
+    def dirige_a(self, dir):
+        self.esc_camb = dir
+    def camb(self,juego):
+        if self.esc_camb != None:
+            juego.Cambiar_Escenario(self.esc_camb[0],self.esc_camb[1])
+    def func(self,juego):
         mouse_pos = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         if True==self.isOver(mouse_pos):
@@ -62,6 +77,12 @@ class Boton(pygame.sprite.Sprite):
             #Comprobar si se hace click dentro del boton
             if True==click[0] and self.disableClick==False:
                 self.mouseClick=True
+                if self.tipo == 'pause':
+                    juego.Escenario_Actual.pauso = True
+                elif self.tipo == 'exit':
+                    juego.Escenario_Actual.pauso = False
+                else:
+                    self.camb(juego)
             #Comprobar si se suelta el click mientras esta dentro del boton [[[[ Accionl boton ]]]]
             if False==click[0] and self.mouseClick==True and self.disableClick==False:
                 self.mouseClick=False
@@ -81,11 +102,3 @@ class Boton(pygame.sprite.Sprite):
             if self.mouseOver==True:
                 self.update_size(self.width-5, self.height-5)
                 self.mouseOver=False
-    #_________________________________________________Funcion para cambiar de escena manualmente
-    def exit(self,screen):
-        if True == self.status(screen):
-            sys.exit()
-    def Pause(self,screen):
-        if True == self.status(screen):
-            return True
-        return False
