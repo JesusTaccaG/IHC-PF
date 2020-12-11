@@ -86,7 +86,7 @@ class Nenufar(pygame.sprite.Sprite):
             #Comprobar si se suelta el click mientras esta dentro del boton [[[[ Accionl boton ]]]]
             if False==click[0] and self.mouseClick==True and self.disableClick==False:
                 self.mouseClick=False
-            
+                
         else:
             #Cambiar la condicion de presionado si se sale del boton sin hacer click
             if self.mouseClick==True:

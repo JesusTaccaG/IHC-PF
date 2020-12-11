@@ -33,5 +33,7 @@ class Game(pygame.sprite.Sprite):
         self.M_01.append(esc)
     def Agregar_M_02(self, esc):
         self.M_02.append(esc)
+    def Quitar_M_02(self):
+        self.M_02.pop()
     def Agregar_Escenario(self, esc):
         self.Escenarios.append(esc)

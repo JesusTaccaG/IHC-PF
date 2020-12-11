@@ -4,13 +4,9 @@ import math
 from os import system
 import numpy as np
 from pygame.locals import *
-from escenario import *
-from boton import *
 from Game import *
-from monita_musical import *
 from config import *
-from nenufar import *
-from frog import *
+#from ejecutar import *
 import threading
 
 WIDTH=640
@@ -22,18 +18,20 @@ def main():
     pygame.init()
     pygame.display.set_caption("Sapo come palabras")
 
-    juego = config_game()
-
+    
+    juego = config_game() #configuracion inicial del juego- escenarios, botones, etc ( mejor miralo por ti mismo )
     pygame.key.set_repeat(1, 80)
     clock = pygame.time.Clock()
 
     while True:
+
         tick = clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit()
-        juego.Mostrar_Escenario()
-        juego.Escenario_Actual.func(juego)
+                sys.exit() #salir del juego
+
+        juego.Mostrar_Escenario()           # muestra TODO 
+        run_escenarios(juego)  # hace funcionar TODO
         pygame.display.flip()
             
 

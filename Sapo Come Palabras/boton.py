@@ -23,6 +23,10 @@ class Boton(pygame.sprite.Sprite):
         self.sound.set_volume(0.2)
         self.esc_camb = None
         self.tipo = None
+        self.objetivo=""
+    #_________________________________________________ORDEN
+    def orden(self, objetivo):
+        self.objetivo=objetivo
     #_________________________________________________Cambiar iamgen de boton
     def update_image(self, ui):
         img = pygame.image.load(ui)
@@ -77,15 +81,16 @@ class Boton(pygame.sprite.Sprite):
             #Comprobar si se hace click dentro del boton
             if True==click[0] and self.disableClick==False:
                 self.mouseClick=True
+            #Comprobar si se suelta el click mientras esta dentro del boton [[[[ Accionl boton ]]]]
+            if False==click[0] and self.mouseClick==True and self.disableClick==False:
+                self.mouseClick=False
                 if self.tipo == 'pause':
                     juego.Escenario_Actual.pauso = True
                 elif self.tipo == 'exit':
                     juego.Escenario_Actual.pauso = False
                 else:
+                    juego.Escenario_Actual.pauso = False
                     self.camb(juego)
-            #Comprobar si se suelta el click mientras esta dentro del boton [[[[ Accionl boton ]]]]
-            if False==click[0] and self.mouseClick==True and self.disableClick==False:
-                self.mouseClick=False
                 return True
             
         else:
