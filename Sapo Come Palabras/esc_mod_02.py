@@ -25,13 +25,18 @@ class Cartel_01(pygame.sprite.Sprite):
 
 class lengua(pygame.sprite.Sprite):
     def __init__(self,x,y,s):
+        #puntos iniciales
         self.pix = x
         self.piy = y
+        #puntos finales
         self.pfx = x
         self.pfy = y
+        #grosor de la linea
         self.size = s
+        #largo de la linea
         self.est = 0
     def draw(self, buffer):
+        #creacion
         pygame.draw.line(buffer, (255, 0, 0), 
                     [self.pix, self.piy], [self.pfx, self.pfy], self.size)
 class sapo_01(pygame.sprite.Sprite):
@@ -40,7 +45,7 @@ class sapo_01(pygame.sprite.Sprite):
         self.y = y
         self.width = w
         self.height = h
-        self.sec = 1
+        self.sec = 10
         hoj1 = pygame.image.load('Images/Recursos/hoja.png')
         self.hoja_o = hoj1
         hoj2 = pg.transform.scale(hoj1, (int(w/10), int(h/7)))

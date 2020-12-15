@@ -134,7 +134,7 @@ def inter_pausa(retorno,niv):
     init.agregar_boton(boton_Niveles)
     init.agregar_boton(boton_exit)
     return init
-
+#rana que salta
 def armar_modo_02():
     mon_mus = Monita_Musical(50,50,100,100)
     mon_mus.update_image('Images/Personajes/mensajero.png')
@@ -167,7 +167,7 @@ def armar_modo_02():
     Mod.agregar_boton(boton01)
     Mod.scr_pause=inter_pausa([4,0],[0,3])
     return Mod
-
+#modos completa la palabra
 def armar_modo_01():
     init = Modalidad_02(0,0,WIDTH,HEIGHT,1)
     init.update_image('Images/Fondos/lake_01.jpg')
@@ -200,7 +200,9 @@ def config_game():
     juego.Agregar_Escenario(Niveles_Mod01())
     juego.Agregar_Escenario(Niveles_Mod02())
     juego.Agregar_Escenario(Niveles_Mod03())
+    #agregar modo rana que salta
     juego.Agregar_M_02(armar_modo_02())
+    #agregar el modo completa la palabra
     juego.Agregar_M_01(armar_modo_01())
     juego.Cambiar_Escenario(0,0)                        #el juego no tiene una ventana predefinida asi que se
                                                         #asigna la de la funcion inicio()

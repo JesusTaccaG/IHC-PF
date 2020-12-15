@@ -56,11 +56,6 @@ class Boton(pygame.sprite.Sprite):
     def exit(self,screen):
         if True == self.status(screen):
             sys.exit()
-    """
-    def Pause(self,screen):
-        if True == self.status(screen):
-            return True
-        return False"""
     def dirige_a(self, dir):
         self.esc_camb = dir
     def camb(self,juego):
