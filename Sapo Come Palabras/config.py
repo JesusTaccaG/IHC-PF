@@ -14,6 +14,7 @@ import threading
 import glob
 from Cartel import *
 from boton import *
+from esc_mod_02 import *
 import random
 
 lst1=[['pro','ba','ble','men','te'],["Pa","ci","fi","ca","dor"],["Te","le","fo","ne","ma "],["Res","pi","ra","de","ro "],["Pa","ra","bó","li","ca "],["Com","pu","ta","do","ra"],["Bi","blio","gra","fí","a "],["Pa","ra","güe","rí","a "],["dis","tan","cia","mien","to "],["Ar","chi","va","do","ra"],["Tran","sa","tlán","ti","co"],["Tro","que","la","do","ra"],["Re","cep","cio","nis","ta"],["Se","cre","ta","ria","do"],["No","ti","fi","ca","ción"],["Cul","tu","ri","za","ción"],["Pro","tec","cion","is","ta "],["Re","ver","be","ra","ción "],["No","men","cla","tu","ra"],["A","sig","na","tu","ra"],["Li","cen","cia","tu","ra"],["Ba","chi","lle","ra","to"],["U","ni","ver","si","dad"],["Es","pe","cia","li","dad"],["Tri","go","no","me","tría"],["Ma","te","má","ti","cas"],["As","tro","no","mí","a"],["Te","ra","péu","ti","co"],["Qui","mio","te","ra","pia"],["Re","la","ti","vi","dad"],["Dis","co","grá","fi","co"],["Te","le","vi","so","ra"],["Pe","rio","dís","ti","co"],["Te","le","vi","si","vo"],["In","qui","si","ti","vo"],["Cir","cun","fe","ren","cia "],["In","te","li","gen","cia "]]
@@ -149,8 +150,6 @@ def armar_modo_02():
     cartel.update_image("Images/Recursos/cartel.png")
     Mod = Modalidad_01(0,0,WIDTH,HEIGHT,sap,mon_mus, cartel,[nenu_sapo])
     Mod.update_image('Images/Fondos/lake_02.png')
-
-    print("--------------------------------------",len(lst1))
     xrand=random.randrange(0,100)%37
     A = lst1[xrand]
     posx=0
@@ -169,8 +168,31 @@ def armar_modo_02():
     Mod.scr_pause=inter_pausa([4,0],[0,3])
     return Mod
 
+def armar_modo_01():
+    init = Modalidad_02(0,0,WIDTH,HEIGHT,1)
+    init.update_image('Images/Fondos/lake_01.jpg')
+    list_m = ['c','s','z']
+    list_p = [('conducir','condu','ir'), ('aducir','adu','ir'), 
+                ('traducir','tradu','ir'), ('esparcir','espar','ir'), 
+                ('producir','produ','ir')]
+    for a,b in enumerate(list_m):
+        mos = Mosca(150+a*100,150,50,50)
+        mos.palabra=b
+        init.agregar_mos(mos)
+    for a,b in enumerate(list_p):
+        cart = Cartel_01(490,330,150,150)
+        cart.palabra = b
+        init.agregar_cart(cart)
+    boton_help  = Boton(20,20,50,50)
+    boton_help.update_image('Images/Botones/23.png')
+    boton_pause = Boton(570,20,50,50)
+    boton_pause.update_image('Images/Botones/6.png')
+    init.agregar_boton(boton_help)
+    init.agregar_boton(boton_pause)
+    return init
+    
 
-def config_game():
+def config_game():  
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     juego = Game(screen)                                #se a creado el buffer del juego y se asigno al GAME
     juego.Agregar_Escenario(inicio())                   
@@ -179,14 +201,30 @@ def config_game():
     juego.Agregar_Escenario(Niveles_Mod02())
     juego.Agregar_Escenario(Niveles_Mod03())
     juego.Agregar_M_02(armar_modo_02())
+    juego.Agregar_M_01(armar_modo_01())
     juego.Cambiar_Escenario(0,0)                        #el juego no tiene una ventana predefinida asi que se
                                                         #asigna la de la funcion inicio()
     return juego
 
+#Aca se hace las funcionalidades
 def run_escenarios(juego):
-    
-    if juego.Escenario_Actual.ID=="mod3":
-    
+    #mod sapo come moscas con palabras
+    if juego.Escenario_Actual.ID=='mod2':
+        for i in juego.Escenario_Actual.Botones:
+            i.func(juego)
+        juego.Escenario_Actual.sapo.func(juego)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit() #salir del juego
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_SPACE:
+                    juego.Escenario_Actual.sapo.presiono=True
+
+    #el sapo que salta
+    elif juego.Escenario_Actual.ID=="mod3":
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit() #salir del juego
         if not juego.Escenario_Actual.pauso:
             juego.Escenario_Actual.Monita_Musical.si_clickea()
             for i in juego.Escenario_Actual.Nenufares:
@@ -201,7 +239,6 @@ def run_escenarios(juego):
                 i.func(juego)
         else:
             for i in juego.Escenario_Actual.scr_pause.Botones[1:]:
-                print("ggggggggggggggg")
                 if True==i.func(juego):
                     if i.objetivo=="reiniciar":
                         juego.Quitar_M_02()
@@ -211,5 +248,9 @@ def run_escenarios(juego):
                         juego.Quitar_M_02()
                         juego.Agregar_M_02(armar_modo_02())
     elif juego.Escenario_Actual.ID=="esc":
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit() #salir del juego
         for i in juego.Escenario_Actual.Botones:
             i.func(juego) 
+    

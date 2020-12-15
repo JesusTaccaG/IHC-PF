@@ -17,24 +17,14 @@ def main():
     pygame.mixer.init()
     pygame.init()
     pygame.display.set_caption("Sapo come palabras")
-
-    
     juego = config_game() #configuracion inicial del juego- escenarios, botones, etc ( mejor miralo por ti mismo )
     pygame.key.set_repeat(1, 80)
     clock = pygame.time.Clock()
-
     while True:
-
         tick = clock.tick(60)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit() #salir del juego
-
         juego.Mostrar_Escenario()           # muestra TODO 
         run_escenarios(juego)  # hace funcionar TODO
         pygame.display.flip()
-            
-
 
 if __name__ == "__main__":
     main()
