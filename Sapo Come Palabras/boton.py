@@ -81,6 +81,10 @@ class Boton(pygame.sprite.Sprite):
                 self.mouseClick=False
                 if self.tipo == 'pause':
                     juego.Escenario_Actual.pauso = True
+                elif self.tipo == 'ayuda':
+                    juego.Escenario_Actual.ayuda = True 
+                elif self.tipo == 'check':
+                    juego.Escenario_Actual.pauso = False
                 elif self.tipo == 'exit':
                     juego.Escenario_Actual.pauso = False
                 else:

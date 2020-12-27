@@ -15,6 +15,7 @@ import glob
 from Cartel import *
 from boton import *
 from esc_mod_02 import *
+from esc_mod_00 import *
 import random
 from imagess import *
 
@@ -357,6 +358,141 @@ def inter_pausa(retorno,niv):
     init.agregar_boton(boton_Niveles)
     init.agregar_boton(boton_exit)
     return init
+
+def inter_ayuda(nombre_animal,ayuda_animal):
+    init = Cartel_ayuda(0,0,WIDTH,HEIGHT,nombre_animal,ayuda_animal)
+    init.update_image("Images/Recursos/opacador.png")
+    Ven_Emer = Boton(140,100,360,280)
+    Ven_Emer.update_image("Images/Recursos/ventana_emergente.png")
+    btn_animal = Boton(270,165,80,80)
+    btn_animal.update_image('Images\m_animales/'+nombre_animal+'.png')
+    boton_check = Boton(430,320,50,50)
+    boton_check.update_image('Images/Botones/34.png')
+    boton_check.tipo = 'check'
+    boton_check.orden("aceptar")
+
+    init.agregar_boton(Ven_Emer)
+    init.agregar_boton(btn_animal)
+    init.agregar_boton(boton_check)
+    return init
+
+def inter_resultado(nombre_animal,animal_tablero,tiempo_tablero):
+    init = Cartel_resultado(0,0,WIDTH,HEIGHT,nombre_animal,animal_tablero,tiempo_tablero)
+    init.update_image("Images/Recursos/opacador.png")
+    Ven_Emer = Boton(140,100,360,280)
+    Ven_Emer.update_image("Images/Recursos/ventana_emergente.png")
+    
+    boton_reloj = Boton(230, 175, 40, 40)
+    boton_reloj.update_image('Images/Recursos/circulo_tiempo.png')
+
+    boton_Configuracion = Boton(230, 280, 50, 50)
+    boton_Configuracion.update_image('Images/Botones/32.png')
+    boton_Reintentar = Boton(290, 280, 50, 50)
+    boton_Reintentar.update_image('Images/Botones/36.png')
+    boton_Reintentar.objetivo ="adios"
+    boton_Reintentar.dirige_a([0,1])
+    
+    boton_siguiente = Boton(350, 280, 50, 50)
+    boton_siguiente.update_image('Images/Botones/0.png')
+    boton_siguiente.orden("reiniciar2")
+    boton_siguiente.dirige_a([0,1])
+    
+    
+    if len(nombre_animal)==len(animal_tablero):
+        if nombre_animal==animal_tablero:
+                for i in range(3):
+                    est_b = Boton(230+i*60,220,50,50)
+                    est_b.update_image('Images/Recursos/estrella_brillante.png')
+                    init.estrellas.append(est_b)
+        else:
+            est_b1 = Boton(230,220,50,50)
+            est_b1.update_image('Images/Recursos/estrella_brillante.png')
+            est_b2 = Boton(290,220,50,50)
+            est_b2.update_image('Images/Recursos/estrella_opaca.png')
+            est_b3 = Boton(350,220,50,50)
+            est_b3.update_image('Images/Recursos/estrella_opaca.png')
+            init.estrellas.append(est_b1)
+            init.estrellas.append(est_b2)
+            init.estrellas.append(est_b3)
+    elif nombre_animal[0:2]==animal_tablero[0:2]:
+        est_b1 = Boton(230,220,50,50)
+        est_b1.update_image('Images/Recursos/estrella_brillante.png')
+        est_b2 = Boton(290,220,50,50)
+        est_b2.update_image('Images/Recursos/estrella_brillante.png')
+        est_b3 = Boton(350,220,50,50)
+        est_b3.update_image('Images/Recursos/estrella_opaca.png')
+        init.estrellas.append(est_b1)
+        init.estrellas.append(est_b2)
+        init.estrellas.append(est_b3)
+    else:
+        est_b1 = Boton(230,220,50,50)
+        est_b1.update_image('Images/Recursos/estrella_opaca.png')
+        est_b2 = Boton(290,220,50,50)
+        est_b2.update_image('Images/Recursos/estrella_opaca.png')
+        est_b3 = Boton(350,220,50,50)
+        est_b3.update_image('Images/Recursos/estrella_opaca.png')
+        init.estrellas.append(est_b1)
+        init.estrellas.append(est_b2)
+        init.estrellas.append(est_b3)
+    init.agregar_boton(Ven_Emer)
+    init.agregar_boton(boton_reloj)
+    init.agregar_boton(boton_Configuracion)
+    init.agregar_boton(boton_Reintentar)
+    init.agregar_boton(boton_siguiente)
+    
+    return init
+
+#rana con imagenes
+def armar_modo_00():
+    fuente = pygame.font.Font(None, 25)
+    init = Modalidad_00(0,0,WIDTH,HEIGHT,1)
+    init.update_image('Images/Fondos/river_02.jpg')
+    list_animales = ['ajolote','ameba','archaeopteryx','ciempiés','cotorra','kiwi','pinzón','rodaballo','escorpión','pingüino']
+    list_animales_ayuda=[
+        'El ajolote es un lagarto de dos patas',
+        'La ameba es un pequeño animal',
+        'Archaeopteryx vivió hace millones de años.',
+        'Pequeño animal, parecido al gusano',
+        'Un tipo de loro de larga cola.',
+        'Ave de plumas lanudas',
+        'Pájaro cantor europeo',
+        'Pez grande',
+        'Signo de los que nacen en octubre',
+        'Es de la familia de aves'
+        ]
+    # list_animales = ['or']
+    n_animal = random.randrange(len(list_animales))
+    print(n_animal)
+    animal = Animal_00(20,150,100,100,list_animales[n_animal])
+    init.agregar_animales(animal)
+    cartel = Cartel_00(WIDTH-250,HEIGHT-110,250,130)
+    cartel.establecer_tiempo(60) #Establecer tiempo de juego
+    cartel.update_image("Images/Recursos/cartel.png")
+    init.agregar_cart(cartel)
+
+    n=2
+    chunks = [list_animales[n_animal][i:i+n] for i in range(0, len(list_animales[n_animal]), n)]
+    for a,b in enumerate(chunks):
+        ran = random.randrange(100,150)
+        ran_x , ran_y = random.choice([-1, 1]), random.choice([-1, 1])
+        mos = Mosca_00(50+a*100,ran,50,50,fuente,ran_x,ran_y)
+        mos.palabra = b
+        init.agregar_mos(mos)
+    
+    boton_help  = Boton(20,20,50,50)
+    boton_help.update_image('Images/Botones/23.png')
+
+    boton_pause = Boton(570,20,50,50)
+    boton_pause.update_image('Images/Botones/6.png')
+
+    boton_pause.tipo = "pause"
+    init.scr_pause=inter_pausa([2,0],[0,1])
+    boton_help.tipo = "ayuda"
+    init.scr_ayuda=inter_ayuda(list_animales[n_animal],list_animales_ayuda[n_animal])
+    init.agregar_boton(boton_pause)
+    init.agregar_boton(boton_help)
+    return init
+
 #rana que salta
 def armar_modo_02():
     mon_mus = Monita_Musical(50,50,100,100)
@@ -475,11 +611,14 @@ def config_game():
     juego.Agregar_Escenario(Niveles_Mod01())
     juego.Agregar_Escenario(Niveles_Mod02())
     juego.Agregar_Escenario(Niveles_Mod03())
+    
     juego.Agregar_Escenario(inicio2())
     juego.Agregar_Escenario(Tienda())
     juego.Agregar_Escenario(Logros())
     juego.Agregar_Escenario(Logros_bloqueados())
     juego.Agregar_Escenario(Configuracion())
+    #Rana con imagenes
+    juego.Agregar_M_00(armar_modo_00())
     #agregar modo rana que salta
     juego.Agregar_M_02(armar_modo_02())
     #agregar el modo completa la palabra
@@ -490,6 +629,68 @@ def config_game():
 
 #Aca se hace las funcionalidades
 def run_escenarios(juego):
+    if juego.Escenario_Actual.ID=="mod1":
+        if not juego.Escenario_Actual.pauso and not juego.Escenario_Actual.ayuda:
+            for i in juego.Escenario_Actual.Botones:
+                i.func(juego)
+        juego.Escenario_Actual.sapo.func(juego)
+        list_moscas = juego.Escenario_Actual.moscas
+
+        bool_termino_tiempo = juego.Escenario_Actual.Cartel[0].termino
+        animal_actual = juego.Escenario_Actual.Animales[0].palabra
+        animal_tablero = juego.Escenario_Actual.Cartel[0].letra
+        tiempo_tablero = juego.Escenario_Actual.Cartel[0].segundos_totales
+        
+        #si termina el tiempo o ya comio todas las moscas
+        if (bool_termino_tiempo or len(list_moscas)==0) and juego.Escenario_Actual.termino==False:
+            juego.Escenario_Actual.src_resultado = inter_resultado(animal_actual,animal_tablero,tiempo_tablero)
+            juego.Escenario_Actual.termino=True
+
+        else:
+            juego.Escenario_Actual.Cartel[0].iniciar_contador(juego.screen)
+
+        #movimiento de moscas
+        for a,b in enumerate(list_moscas):
+            b.move()  
+        for a,b in enumerate(list_moscas):
+            if juego.Escenario_Actual.sapo.lengua.is_collided_with(b):
+                list_moscas.pop(a)
+                juego.Escenario_Actual.Cartel[0].aumentar_palabra(b.palabra)
+        #pausa
+        if juego.Escenario_Actual.pauso:
+            for i in juego.Escenario_Actual.scr_pause.Botones[1:]:
+                if True==i.func(juego):
+                    if i.objetivo=="reiniciar":
+                        juego.Quitar_M_00()
+                        juego.Agregar_M_00(armar_modo_00())
+                        juego.Escenario_Actual.pauso=False
+                    if i.objetivo=="salir":
+                        juego.Quitar_M_00()
+                        juego.Agregar_M_00(armar_modo_00())
+        elif juego.Escenario_Actual.ayuda:
+            for i in juego.Escenario_Actual.scr_ayuda.Botones[1:]:
+                    if True==i.func(juego):
+                        if i.objetivo=="aceptar":
+                            juego.Escenario_Actual.ayuda = False
+        elif juego.Escenario_Actual.termino:
+            for i in juego.Escenario_Actual.src_resultado.Botones[2:]:
+                    if True==i.func(juego):
+                        if i.objetivo=="adios":
+                            juego.Quitar_M_00()
+                            juego.Agregar_M_00(armar_modo_00())
+                            juego.Escenario_Actual.termino=False
+                        if i.objetivo=="reiniciar2":
+                            juego.Quitar_M_00()
+                            juego.Agregar_M_00(armar_modo_00())
+                            juego.Escenario_Actual.termino=False
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit() #salir del juego
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_SPACE:
+                    juego.Escenario_Actual.sapo.presiono=True
+
     #mod sapo come moscas con palabras
     if juego.Escenario_Actual.ID=='mod2':
         frog=juego.Escenario_Actual.sapo
