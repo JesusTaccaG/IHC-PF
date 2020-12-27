@@ -12,6 +12,7 @@ class Game(pygame.sprite.Sprite):
     def __init__(self, scr):
         self.screen = scr
     def Cambiar_Escenario(self, esc, tipo):
+        print(esc,tipo)
         if tipo ==0:
             self.Escenario_Actual = self.Escenarios[esc]
             self.tipo = 0

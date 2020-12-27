@@ -16,6 +16,7 @@ from Cartel import *
 from boton import *
 from esc_mod_02 import *
 import random
+from imagess import *
 
 lst1=[['pro','ba','ble','men','te'],["Pa","ci","fi","ca","dor"],["Te","le","fo","ne","ma "],["Res","pi","ra","de","ro "],["Pa","ra","bó","li","ca "],["Com","pu","ta","do","ra"],["Bi","blio","gra","fí","a "],["Pa","ra","güe","rí","a "],["dis","tan","cia","mien","to "],["Ar","chi","va","do","ra"],["Tran","sa","tlán","ti","co"],["Tro","que","la","do","ra"],["Re","cep","cio","nis","ta"],["Se","cre","ta","ria","do"],["No","ti","fi","ca","ción"],["Cul","tu","ri","za","ción"],["Pro","tec","cion","is","ta "],["Re","ver","be","ra","ción "],["No","men","cla","tu","ra"],["A","sig","na","tu","ra"],["Li","cen","cia","tu","ra"],["Ba","chi","lle","ra","to"],["U","ni","ver","si","dad"],["Es","pe","cia","li","dad"],["Tri","go","no","me","tría"],["Ma","te","má","ti","cas"],["As","tro","no","mí","a"],["Te","ra","péu","ti","co"],["Qui","mio","te","ra","pia"],["Re","la","ti","vi","dad"],["Dis","co","grá","fi","co"],["Te","le","vi","so","ra"],["Pe","rio","dís","ti","co"],["Te","le","vi","si","vo"],["In","qui","si","ti","vo"],["Cir","cun","fe","ren","cia "],["In","te","li","gen","cia "]]
 
@@ -24,11 +25,233 @@ HEIGHT=480
 #inicio donde comienza el juego
 def inicio():
     init = Escenario(0 ,0, WIDTH, HEIGHT)
+    ##Imagen inicial de pantalla
     init.update_image('Images/Fondos/swamp_01.jpg')
-    boton_play = Boton(280,200,80,80)
+    #Imagenes de rana y mosca
+    img1 = Imagess(280,200,100,100)
+    img1.update_image("Images/Personajes/ranita.png",'Images/Personajes/ranita.png',"Images/Recursos/mosca.png")
+    #Imagen de letrero
+    letrero = Boton(220,-100,200,200)
+    letrero.update_image('Images/Recursos/cartel_c.png')
+    #Mosca cartel xD
+    mosca_cartel = Boton(230,105,170,170)
+    mosca_cartel.update_image('Images/Recursos/mosca_letrero.png')
+    #flecha de opciones
+    flecha_opciones = Boton(590,350,50,50)
+    flecha_opciones.update_image('Images/Recursos/flecha.png')
+    flecha_opciones.dirige_a([5,0])
+    #Boton de play
+    boton_play = Boton(285,200,65,65)
     boton_play.update_image('Images/Botones/0.png')
-    boton_play.dirige_a([1,0]) #pantalla rpincipal -> modos de juego
+    boton_play.dirige_a([1,0]) #pantalla principal -> modos de juego
+    #Dibujar en la pantalla
+    init.agregar_boton(letrero)
+    init.agregar_boton(img1)
+    init.agregar_boton(mosca_cartel)
     init.agregar_boton(boton_play)
+    init.agregar_boton(flecha_opciones)
+    return init
+def inicio2():
+    init = Escenario(0 ,0, WIDTH, HEIGHT)
+    ##Imagen inicial de pantalla
+    init.update_image('Images/Fondos/swamp_01.jpg')
+    #Imagenes de rana y mosca
+    img1 = Imagess(280,200,100,100)
+    img1.update_image("Images/Personajes/ranita.png",'Images/Personajes/ranita.png',"Images/Recursos/mosca.png")
+    #Imagen de letrero
+    letrero = Boton(220,-100,200,200)
+    letrero.update_image('Images/Recursos/cartel_c.png')
+    #Mosca cartel xD
+    mosca_cartel = Boton(230,105,170,170)
+    mosca_cartel.update_image('Images/Recursos/mosca_letrero.png')
+    #flecha de opciones
+    flecha_opciones = Boton(379,350,55,55)
+    flecha_opciones.update_image('Images/Recursos/flecha.png')
+    flecha_opciones.dirige_a([0,0])
+    #Opcion Logros
+    Logros = Boton(445,355,40,40)
+    Logros.update_image('Images/Recursos/logros.png')
+    Logros.dirige_a([7,0])
+    #Opcion Configuracion
+    Configuracion = Boton(500,348,55,55)
+    Configuracion.update_image('Images/Recursos/configuracion.png')
+    Configuracion.dirige_a([9,0])
+    #Opcion Tienda
+    Tienda = Boton(560,340,70,70)
+    Tienda.update_image('Images/Recursos/tienda.png')
+    Tienda.dirige_a([6,0])
+    #Panel de opciones
+    panel_opciones = Boton(430,350,200,50)
+    panel_opciones.update_image('Images/Recursos/franja_verde.png')
+    #Boton de play
+    boton_play = Boton(285,200,65,65)
+    boton_play.update_image('Images/Botones/0.png')
+    boton_play.dirige_a([1,0]) #pantalla principal -> modos de juego
+    #Dibujar en la pantalla
+    init.agregar_boton(letrero)
+    init.agregar_boton(img1)
+    init.agregar_boton(mosca_cartel)
+    init.agregar_boton(boton_play)
+    init.agregar_boton(flecha_opciones)
+    init.agregar_boton(panel_opciones)
+    init.agregar_boton(Logros)
+    init.agregar_boton(Configuracion)
+    init.agregar_boton(Tienda)
+    return init
+def Tienda():
+    init = Escenario(0 ,0, WIDTH, HEIGHT)
+    ##Imagen inicial de pantalla
+    init.update_image('Images/Fondos/tiendita.png')
+    #boton cerrar
+    boton_cerrar = Boton(545,30,65,65)
+    boton_cerrar.update_image('Images/Recursos/cerrar.png')
+    boton_cerrar.dirige_a([0,0]) #pantalla principal
+    ##Estanteria
+    Estanteria = Boton(20,20,450,450)
+    Estanteria.update_image('Images/Recursos/estante.png')
+    ##Rana Compradora
+    Rana_compra = Boton(300,125,350,350)
+    Rana_compra.update_image('Images/Recursos/ranacompra.png')
+    ## Item rana roja
+    Rana_roja = Boton(100,90,80,80)
+    Rana_roja.update_image('Images/Recursos/ranaroja.png')
+    ## Item rana amarilla
+    Rana_amarilla = Boton(100,240,80,80)
+    Rana_amarilla.update_image('Images/Recursos/ranamarialla.png')
+    ## Item rana azul
+    Rana_azul = Boton(230,90,80,80)
+    Rana_azul.update_image('Images/Recursos/ranazul.png')
+    ## Item rana camaleon
+    Camaleon = Boton(230,240,80,80)
+    Camaleon.update_image('Images/Recursos/camaleon.png')
+    #Dibujar en la pantalla
+    init.agregar_boton(boton_cerrar)
+    init.agregar_boton(Estanteria)
+    init.agregar_boton(Rana_compra)
+    init.agregar_boton(Rana_roja)
+    init.agregar_boton(Rana_amarilla)
+    init.agregar_boton(Rana_azul)
+    init.agregar_boton(Camaleon)
+    return init
+def Logros():
+    init = Escenario(0 ,0, WIDTH, HEIGHT)
+    ##Imagen inicial de pantalla
+    init.update_image('Images/Fondos/fondo_inicial.png')
+    cuadro_texto = Boton(70,-20,500,500)
+    cuadro_texto.update_image('Images/Recursos/ventana_emergente.png')
+    #Titulo de los logros
+    texto_normal = Boton(240,20,150,60)
+    texto_normal.update_image('Images/Recursos/titulo_logros.png')
+    #boton cerrar
+    boton_cerrar = Boton(545,30,65,65)
+    boton_cerrar.update_image('Images/Recursos/cerrar.png')
+    boton_cerrar.dirige_a([0,0]) #pantalla principal
+    #Logro 1
+    logro_1 = Boton(185,140,60,60)
+    logro_1.update_image('Images/Recursos/logro1.png')
+    #Logro 2
+    logro_2 = Boton(185,220,60,60)
+    logro_2.update_image('Images/Recursos/logro2.png')
+    #Logro 3
+    logro_3 = Boton(185,300,60,60)
+    logro_3.update_image('Images/Recursos/logro3.png')
+    #Logro 1 texto
+    logro_1texto = Boton(265,140,200,60)
+    logro_1texto.update_image('Images/Recursos/logro1texto.png')
+    #Logro 2 texto
+    logro_2texto = Boton(265,220,200,60)
+    logro_2texto.update_image('Images/Recursos/logro2texto.png')
+    #Logro 3 texto
+    logro_3texto = Boton(265,300,200,60)
+    logro_3texto.update_image('Images/Recursos/logro3texto.png')
+    #Flecha Atras
+    Flecha_Atras = Boton(125,170,40,180)
+    Flecha_Atras.update_image('Images/Recursos/flecha2.png')
+    Flecha_Atras.dirige_a([8,0])
+    #Flecha Adelante
+    Flecha_Adelante = Boton(480,170,40,180)
+    Flecha_Adelante.update_image('Images/Recursos/flecha1.png')
+    Flecha_Adelante.dirige_a([8,0])
+    init.agregar_boton(boton_cerrar)
+    init.agregar_boton(cuadro_texto)
+    init.agregar_boton(texto_normal)
+    init.agregar_boton(logro_1)
+    init.agregar_boton(logro_2)
+    init.agregar_boton(logro_3)
+    init.agregar_boton(logro_1texto)
+    init.agregar_boton(logro_2texto)
+    init.agregar_boton(logro_3texto)
+    init.agregar_boton(Flecha_Atras)
+    init.agregar_boton(Flecha_Adelante)
+    return init
+def Logros_bloqueados():
+    init = Escenario(0 ,0, WIDTH, HEIGHT)
+    ##Imagen inicial de pantalla
+    init.update_image('Images/Fondos/fondo_inicial.png')
+    cuadro_texto = Boton(70,-20,500,500)
+    cuadro_texto.update_image('Images/Recursos/ventana_emergente.png')
+    #Titulo de los logros
+    texto_normal = Boton(240,20,150,60)
+    texto_normal.update_image('Images/Recursos/titulo_logros.png')
+    #boton cerrar
+    boton_cerrar = Boton(545,30,65,65)
+    boton_cerrar.update_image('Images/Recursos/cerrar.png')
+    boton_cerrar.dirige_a([0,0]) #pantalla principal
+    #Logro 1
+    logro_1 = Boton(185,140,60,60)
+    logro_1.update_image('Images/Recursos/logro1bc.png')
+    #Logro 2
+    logro_2 = Boton(185,220,60,60)
+    logro_2.update_image('Images/Recursos/logro2bc.png')
+    #Logro 3
+    logro_3 = Boton(185,300,60,60)
+    logro_3.update_image('Images/Recursos/logro3bc.png')
+    #Logro 1 texto
+    logro_1texto = Boton(265,140,200,60)
+    logro_1texto.update_image('Images/Recursos/logro1bctexto.png')
+    #Logro 2 texto
+    logro_2texto = Boton(265,220,200,60)
+    logro_2texto.update_image('Images/Recursos/logro2bctexto.png')
+    #Logro 3 texto
+    logro_3texto = Boton(265,300,200,60)
+    logro_3texto.update_image('Images/Recursos/logro3bctexto.png')
+    #Flecha Atras
+    Flecha_Atras = Boton(125,170,40,180)
+    Flecha_Atras.update_image('Images/Recursos/flecha2.png')
+    Flecha_Atras.dirige_a([7,0])
+    #Flecha Adelante
+    Flecha_Adelante = Boton(480,170,40,180)
+    Flecha_Adelante.update_image('Images/Recursos/flecha1.png')
+    Flecha_Adelante.dirige_a([7,0])
+    init.agregar_boton(boton_cerrar)
+    init.agregar_boton(cuadro_texto)
+    init.agregar_boton(texto_normal)
+    init.agregar_boton(logro_1)
+    init.agregar_boton(logro_2)
+    init.agregar_boton(logro_3)
+    init.agregar_boton(logro_1texto)
+    init.agregar_boton(logro_2texto)
+    init.agregar_boton(logro_3texto)
+    init.agregar_boton(Flecha_Atras)
+    init.agregar_boton(Flecha_Adelante)
+    return init
+def Configuracion():
+    init = Escenario(0 ,0, WIDTH, HEIGHT)
+    ##Imagen inicial de pantalla
+    init.update_image('Images/Fondos/fondo_inicial.png')
+    #Titulo de los Configuracion
+    texto_normal = Boton(220,20,190,60)
+    texto_normal.update_image('Images/Recursos/titulo_configuracion.png')
+    #Ventana basura
+    cuadro_texto = Boton(70,-20,500,500)
+    cuadro_texto.update_image('Images/Recursos/ventana_emergente.png')
+    #boton cerrar
+    boton_cerrar = Boton(545,30,65,65)
+    boton_cerrar.update_image('Images/Recursos/cerrar.png')
+    boton_cerrar.dirige_a([0,0]) #pantalla principal
+    init.agregar_boton(boton_cerrar)
+    init.agregar_boton(cuadro_texto)
+    init.agregar_boton(texto_normal)
     return init
 #escenario para los modos
 #0 == Escenarios
@@ -172,23 +395,75 @@ def armar_modo_01():
     init = Modalidad_02(0,0,WIDTH,HEIGHT,1)
     init.update_image('Images/Fondos/lake_01.jpg')
     list_m = ['c','s','z']
-    list_p = [('conducir','condu','ir'), ('aducir','adu','ir'), 
-                ('traducir','tradu','ir'), ('esparcir','espar','ir'), 
-                ('producir','produ','ir')]
+    list_p = [('conducir',['condu','ir']), ('aducir',['adu','ir']), 
+                ('traducir',['tradu','ir']), ('esparcir',['espar','ir']), 
+                ('producir',['produ','ir'])]
     for a,b in enumerate(list_m):
-        mos = Mosca(150+a*100,150,50,50)
-        mos.palabra=b
+        mos = Mosca(150+a*100,150,50,50,b)
         init.agregar_mos(mos)
     for a,b in enumerate(list_p):
-        cart = Cartel_01(490,330,150,150)
-        cart.palabra = b
+        cart = Cartel_01(440,330,200,150, b)
+        if a==0:
+            cart.activo=True
         init.agregar_cart(cart)
     boton_help  = Boton(20,20,50,50)
     boton_help.update_image('Images/Botones/23.png')
+    boton_help.objetivo="ayuda"
     boton_pause = Boton(570,20,50,50)
     boton_pause.update_image('Images/Botones/6.png')
+    boton_pause.objetivo="pausa"
+    boton_niveles = Boton(250,270,40,40)
+    boton_niveles.update_image('Images/Botones/15.png')
+    boton_niveles.dirige_a([3,0])
+    boton_reintentar = Boton(300,270,40,40)
+    boton_reintentar.update_image('Images/Botones/31.png')
+    boton_reintentar.dirige_a([0,2])
+    boton_siguiente = Boton(350,270,40,40)
+    boton_siguiente.update_image('Images/Botones/7.png')
+    boton_lanza_1 = Boton(250,180,40,40)
+    boton_lanza_1.update_image('Images/Recursos/circulo_1.png')
+    boton_lanza_2 = Boton(300,180,40,40)
+    boton_lanza_2.update_image('Images/Recursos/circulo_2.png')
+    boton_tiempo = Boton(350,180,40,40)
+    boton_tiempo.update_image('Images/Recursos/circulo_tiempo.png')
+    for i in range(3):
+        est_b = Boton(250+i*50,220,40,40)
+        est_b.update_image('Images/Recursos/estrella_brillante.png')
+        est_o = Boton(250+i*50,220,40,40)
+        est_o.update_image('Images/Recursos/estrella_opaca.png')
+        init.estrellas.append(est_b)
+        init.estrellas.append(est_o)
+    boton_cerrar = Boton(470,80,40,40)
+    boton_cerrar.update_image('Images/Botones/33_r.png')
+    boton_cerrar.objetivo='cerrar'
+    temporal="juegio \n uasdhyuasd \n adhaifhaif \n asdaff"
+    init.agregar_texto(temporal)
+    boton_niveles02       = Boton(220,180,40,40)
+    boton_niveles02.update_image('Images/Botones/15.png')
+    boton_niveles02.dirige_a([3,0])
+    boton_Configuracion02 = Boton(220,230,40,40)
+    boton_Configuracion02.update_image('Images/Botones/32.png')
+    #boton_Configuracion02.dirige_a([])
+    boton_reintentar02    = Boton(220,280,40,40)
+    boton_reintentar02.update_image('Images/Botones/31.png')
+    boton_reintentar02.dirige_a([0,2])
+    boton_exit02          = Boton(415,130,40,40)
+    boton_exit02.update_image('Images/Botones/33_r.png')
+    boton_exit02.objetivo='salir'
     init.agregar_boton(boton_help)
     init.agregar_boton(boton_pause)
+    init.botones_01.append(boton_reintentar)
+    init.botones_01.append(boton_siguiente)
+    init.botones_01.append(boton_niveles)
+    init.objetivos.append(boton_lanza_1)
+    init.objetivos.append(boton_lanza_2)
+    init.objetivos.append(boton_tiempo)
+    init.botones_02.append(boton_cerrar)
+    init.botones_03.append(boton_niveles02)
+    init.botones_03.append(boton_Configuracion02)
+    init.botones_03.append(boton_reintentar02)
+    init.botones_03.append(boton_exit02)
+    
     return init
     
 
@@ -200,6 +475,11 @@ def config_game():
     juego.Agregar_Escenario(Niveles_Mod01())
     juego.Agregar_Escenario(Niveles_Mod02())
     juego.Agregar_Escenario(Niveles_Mod03())
+    juego.Agregar_Escenario(inicio2())
+    juego.Agregar_Escenario(Tienda())
+    juego.Agregar_Escenario(Logros())
+    juego.Agregar_Escenario(Logros_bloqueados())
+    juego.Agregar_Escenario(Configuracion())
     #agregar modo rana que salta
     juego.Agregar_M_02(armar_modo_02())
     #agregar el modo completa la palabra
@@ -212,15 +492,51 @@ def config_game():
 def run_escenarios(juego):
     #mod sapo come moscas con palabras
     if juego.Escenario_Actual.ID=='mod2':
-        for i in juego.Escenario_Actual.Botones:
-            i.func(juego)
+        frog=juego.Escenario_Actual.sapo
+        if not juego.Escenario_Actual.ayuda and not juego.Escenario_Actual.termino:
+            for i in juego.Escenario_Actual.Botones:
+                if i.func(juego):
+                    if i.objetivo=='ayuda':
+                        juego.Escenario_Actual.ayuda=True
+                    if i.objetivo=='pausa':
+                        juego.Escenario_Actual.pauso=True
         juego.Escenario_Actual.sapo.func(juego)
+
+        for i in juego.Escenario_Actual.moscas:
+            if i.vivo:
+                i.movimiento(juego.Escenario_Actual)
+                if not frog.atrapo_mosca and i.atrapado(frog.lengua.pfx,frog.lengua.pfy) and frog.sec>0:
+                    #frog.atrapo_mosca=True
+                    #frog.mosca_atrapada=i
+                    frog.sec=-frog.sec
+                    i.fue_atrapado=True
+        for i in juego.Escenario_Actual.cartel:
+            if i.activo:
+                i.func()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit() #salir del juego
             if event.type == pygame.KEYDOWN:
                 if event.key == K_SPACE:
                     juego.Escenario_Actual.sapo.presiono=True
+        if juego.Escenario_Actual.termino:
+            for i in juego.Escenario_Actual.botones_01:
+                temp=juego.Escenario_Actual
+                if i.func(juego):
+                    temp.reiniciar()
+        if juego.Escenario_Actual.ayuda:
+            for i in juego.Escenario_Actual.botones_02:
+                if i.func(juego):
+                    if i.objetivo=='cerrar':
+                        juego.Escenario_Actual.ayuda=False
+        if juego.Escenario_Actual.pauso:
+            for i in juego.Escenario_Actual.botones_03:
+                temp=juego.Escenario_Actual
+                if i.func(juego):
+                    if i.objetivo=='salir':
+                        juego.Escenario_Actual.pauso=False
+                    else:
+                        temp.reiniciar()
 
     #el sapo que salta
     elif juego.Escenario_Actual.ID=="mod3":
