@@ -436,7 +436,7 @@ def armar_modo_01():
     boton_cerrar = Boton(470,80,40,40)
     boton_cerrar.update_image('Images/Botones/33_r.png')
     boton_cerrar.objetivo='cerrar'
-    temporal="juegio \n uasdhyuasd \n adhaifhaif \n asdaff"
+    temporal="REGLA DEL USO DE LA C \n Se usa la 'c' en las \n palabras terminadas en 'cir'"
     init.agregar_texto(temporal)
     boton_niveles02       = Boton(220,180,40,40)
     boton_niveles02.update_image('Images/Botones/15.png')
@@ -518,18 +518,21 @@ def run_escenarios(juego):
                 sys.exit() #salir del juego
             if event.type == pygame.KEYDOWN:
                 if event.key == K_SPACE:
+                    if not juego.Escenario_Actual.sapo.presiono:
+                        juego.Escenario_Actual.sapo.lenguetazo+=1
                     juego.Escenario_Actual.sapo.presiono=True
+                    print(juego.Escenario_Actual.sapo.lenguetazo)
         if juego.Escenario_Actual.termino:
             for i in juego.Escenario_Actual.botones_01:
                 temp=juego.Escenario_Actual
                 if i.func(juego):
                     temp.reiniciar()
-        if juego.Escenario_Actual.ayuda:
+        elif juego.Escenario_Actual.ayuda:
             for i in juego.Escenario_Actual.botones_02:
                 if i.func(juego):
                     if i.objetivo=='cerrar':
                         juego.Escenario_Actual.ayuda=False
-        if juego.Escenario_Actual.pauso:
+        elif juego.Escenario_Actual.pauso:
             for i in juego.Escenario_Actual.botones_03:
                 temp=juego.Escenario_Actual
                 if i.func(juego):

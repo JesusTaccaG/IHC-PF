@@ -61,6 +61,7 @@ class lengua(pygame.sprite.Sprite):
                     [self.pfx, self.pfy, 7, 7], 0)
 class sapo_01(pygame.sprite.Sprite):
     def __init__(self,x,y,w,h):
+        self.lenguetazo=0
         self.mosca_atrapada=None
         self.atrapo_mosca=False
         self.x = x
@@ -247,6 +248,7 @@ class Modalidad_02(pygame.sprite.Sprite):
         self.ayuda=False
         self.sapo.mosca_atrapada=None
         self.sapo.atrapo_mosca=False
+        self.sapo.lenguetazo=0
     def draw(self, buffer):
         buffer.blit(self.image2, (self.x, self.y))
         self.sapo.draw(buffer)
@@ -274,7 +276,17 @@ class Modalidad_02(pygame.sprite.Sprite):
             buffer.blit(self.vent_emer, (self.x+195, self.y+115))
             for i in self.botones_01:
                 i.draw(buffer)
+            if self.sapo.lenguetazo==1:
+                self.estrellas[0].draw(buffer)
+            else:
+                self.estrellas[1].draw(buffer)
+            if self.sapo.lenguetazo<=2:
+                self.estrellas[2].draw(buffer)
+            else:
+                self.estrellas[3].draw(buffer)
+            self.estrellas[4].draw(buffer)
+            """
             for i in range(int(len(self.estrellas)/2)):
-                self.estrellas[i*2+1].draw(buffer)
+                self.estrellas[i*2].draw(buffer)"""
             for i in self.objetivos:
                 i.draw(buffer)
