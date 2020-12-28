@@ -19,10 +19,14 @@ from esc_mod_00 import *
 import random
 from imagess import *
 
-lst1=[['pro','ba','ble','men','te'],["Pa","ci","fi","ca","dor"],["Te","le","fo","ne","ma "],["Res","pi","ra","de","ro "],["Pa","ra","bó","li","ca "],["Com","pu","ta","do","ra"],["Bi","blio","gra","fí","a "],["Pa","ra","güe","rí","a "],["dis","tan","cia","mien","to "],["Ar","chi","va","do","ra"],["Tran","sa","tlán","ti","co"],["Tro","que","la","do","ra"],["Re","cep","cio","nis","ta"],["Se","cre","ta","ria","do"],["No","ti","fi","ca","ción"],["Cul","tu","ri","za","ción"],["Pro","tec","cion","is","ta "],["Re","ver","be","ra","ción "],["No","men","cla","tu","ra"],["A","sig","na","tu","ra"],["Li","cen","cia","tu","ra"],["Ba","chi","lle","ra","to"],["U","ni","ver","si","dad"],["Es","pe","cia","li","dad"],["Tri","go","no","me","tría"],["Ma","te","má","ti","cas"],["As","tro","no","mí","a"],["Te","ra","péu","ti","co"],["Qui","mio","te","ra","pia"],["Re","la","ti","vi","dad"],["Dis","co","grá","fi","co"],["Te","le","vi","so","ra"],["Pe","rio","dís","ti","co"],["Te","le","vi","si","vo"],["In","qui","si","ti","vo"],["Cir","cun","fe","ren","cia "],["In","te","li","gen","cia "]]
+lst1=[['pro','ba','ble','men','te'],["pa","ci","fi","ca","dor"],["te","le","fo","ne","ma"],["res","pi","ra","de","ro"],["pa","ra","bó","li","ca"],["com","pu","ta","do","ra"],["bi","blio","gra","fí","a"],["pa","ra","güe","rí","a"],["dis","tan","cia","mien","to"],["ar","chi","va","do","ra"],["tran","sa","tlán","ti","co"],["tro","que","la","do","ra"],["re","cep","cio","nis","ta"],["se","cre","ta","ria","do"],["no","ti","fi","ca","ción"],["cul","tu","ri","za","ción"],["pro","tec","cion","is","ta"],["re","ver","be","ra","ción"],["no","men","cla","tu","ra"],["a","sig","na","tu","ra"],["li","cen","cia","tu","ra"],["ba","chi","lle","ra","to"],["u","ni","ver","si","dad"],["es","pe","cia","li","dad"],["tri","go","no","me","tría"],["ma","te","má","ti","cas"],["as","tro","no","mí","a"],["te","ra","péu","ti","co"],["qui","mio","te","ra","pia"],["re","la","ti","vi","dad"],["dis","co","grá","fi","co"],["te","le","vi","so","ra"],["pe","rio","dís","ti","co"],["te","le","vi","si","vo"],["in","qui","si","ti","vo"],["cir","cun","fe","ren","cia"],["in","te","li","gen","cia"]]
 
 WIDTH=640
 HEIGHT=480
+
+def unsort(l):
+    return random.sample(l, len(l))
+
 #inicio donde comienza el juego
 def inicio():
     init = Escenario(0 ,0, WIDTH, HEIGHT)
@@ -329,9 +333,12 @@ def Niveles_Mod03():
         nivel.update_image("Images/Recursos/nivelbloqueado.png")
         if i==0:
             nivel.dirige_a([0,3])
+            nivel.niv=str(i+1)
             nivel.update_image("Images/Recursos/nivel0estrellas.png")
+        nivel.objetivo=str(i+1)
         init.agregar_boton(nivel)
     init.agregar_boton(boton_atras)
+    init.esc_niv=True
     return init
 #---------------------------------------------------------------------pausa de los escenarios
 def inter_pausa(retorno,niv):
@@ -357,6 +364,50 @@ def inter_pausa(retorno,niv):
     init.agregar_boton(boton_Reintentar)
     init.agregar_boton(boton_Niveles)
     init.agregar_boton(boton_exit)
+    return init
+#---------------------------------------------------------------------final mensaje
+def fin_juego(retorno,niv):
+    init = Escenario(0,0,WIDTH,HEIGHT)
+    init.update_image("Images/Recursos/opacador2.png")
+
+    Ven_Emer = Boton(140,100,360,280)
+    Ven_Emer.update_image("Images/Recursos/ventana_emergente.png")
+
+    boton_Continuar = Boton(205, 270, 70, 70)
+    boton_Continuar.update_image('Images/Botones/7.png')
+    boton_Continuar.orden("continuar")
+    boton_Continuar.dirige_a(retorno)
+
+    boton_Reintentar = Boton(285, 270, 70, 70)
+    boton_Reintentar.update_image('Images/Botones/36.png')
+    boton_Reintentar.orden("reiniciar")
+    boton_Reintentar.dirige_a(niv)
+
+    boton_Niveles = Boton(365, 270, 70, 70)
+    boton_Niveles.update_image('Images/Botones/15.png')
+    boton_Niveles.dirige_a(retorno)
+    boton_Niveles.orden("salir")
+
+    estrella1 = Boton(210, 190, 70, 70)
+    estrella1.update_image('Images/Recursos/estrella2.png')
+    estrella1.noButton=True
+
+    estrella2 = Boton(290, 160, 70, 70)
+    estrella2.update_image('Images/Recursos/estrella2.png')
+    estrella2.noButton=True
+
+    estrella3 = Boton(370, 190, 70, 70)
+    estrella3.update_image('Images/Recursos/estrella2.png')
+    estrella3.noButton=True
+
+    init.agregar_boton(Ven_Emer)
+    init.agregar_boton(boton_Continuar)
+    init.agregar_boton(boton_Reintentar)
+    init.agregar_boton(boton_Niveles)
+    init.agregar_boton(estrella1)
+    init.agregar_boton(estrella2)
+    init.agregar_boton(estrella3)
+
     return init
 
 def inter_ayuda(nombre_animal,ayuda_animal):
@@ -494,10 +545,10 @@ def armar_modo_00():
     return init
 
 #rana que salta
-def armar_modo_02():
+def armar_modo_02(seed=None):
     mon_mus = Monita_Musical(50,50,100,100)
     mon_mus.update_image('Images/Personajes/mensajero.png')
-    mon_mus.update_audio('sounds/Palabras/palabra_01.mp3')
+    
     sap = Frog(170,370,80,80,"Images/Personajes/ranita.png")
     nenu_sapo = Boton(145,340,150,150)
     nenu_sapo.update_image("Images/Recursos/nenufar.png")
@@ -507,11 +558,24 @@ def armar_modo_02():
     tiempo_segundos = 90
     cartel = Cartel(WIDTH-250,HEIGHT-110,250,130,fuente,numero_de_fotogramas,tasa_fotogramas,tiempo_segundos)
     cartel.update_image("Images/Recursos/cartel.png")
-    Mod = Modalidad_01(0,0,WIDTH,HEIGHT,sap,mon_mus, cartel,[nenu_sapo])
-    Mod.update_image('Images/Fondos/lake_02.png')
     xrand=random.randrange(0,100)%37
     A = lst1[xrand]
+    if seed!=None:
+        A=seed
+    aud="sounds/palabras/"+A[0]+A[1]+A[2]+A[3]+A[4]+".mp3"
+
+    print("audio---------------------- ",aud)
+    try:
+        mon_mus.update_audio(aud)
+    except:
+        mon_mus.update_audio("sounds/palabras/except.mp3")
+    cartel.textooriginal=A
+    A=unsort(A)
     posx=0
+    
+    Mod = Modalidad_01(0,0,WIDTH,HEIGHT,sap,mon_mus, cartel,[nenu_sapo])
+    Mod.update_image('Images/Fondos/lake_02.png')
+    
     for i in A:
         fe = np.random.rand(2)
         posy=180+120*fe[1]
@@ -525,6 +589,8 @@ def armar_modo_02():
     boton01.tipo = "pause"
     Mod.agregar_boton(boton01)
     Mod.scr_pause=inter_pausa([4,0],[0,3])
+    Mod.scr_final=fin_juego([4,0],[0,3])
+    Mod.niv_num=0
     return Mod
 #modos completa la palabra
 def armar_modo_01():
@@ -629,6 +695,9 @@ def config_game():
 
 #Aca se hace las funcionalidades
 def run_escenarios(juego):
+    estrellasNIVEL=0
+    desbloquear=False
+    nivelActual=0
     if juego.Escenario_Actual.ID=="mod1":
         if not juego.Escenario_Actual.pauso and not juego.Escenario_Actual.ayuda:
             for i in juego.Escenario_Actual.Botones:
@@ -747,7 +816,43 @@ def run_escenarios(juego):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit() #salir del juego
-        if not juego.Escenario_Actual.pauso:
+        if juego.Escenario_Actual.termino==True:
+            
+            if juego.Escenario_Actual.estrellas==1:
+                juego.Escenario_Actual.scr_final.Botones[4].update_image('Images/Recursos/estrella1.png')
+                
+            if juego.Escenario_Actual.estrellas==2:
+                juego.Escenario_Actual.scr_final.Botones[4].update_image('Images/Recursos/estrella1.png')
+                juego.Escenario_Actual.scr_final.Botones[5].update_image('Images/Recursos/estrella1.png')
+                
+            if juego.Escenario_Actual.estrellas==3:
+                juego.Escenario_Actual.scr_final.Botones[4].update_image('Images/Recursos/estrella1.png')
+                juego.Escenario_Actual.scr_final.Botones[5].update_image('Images/Recursos/estrella1.png')
+                juego.Escenario_Actual.scr_final.Botones[6].update_image('Images/Recursos/estrella1.png')
+            juego.estrellasNIVEL=juego.Escenario_Actual.estrellas
+            
+            for i in juego.Escenario_Actual.scr_final.Botones[1:]:
+
+                if True==i.func(juego):
+                    if i.objetivo=="reiniciar":
+                        juego.Quitar_M_02()
+                        juego.Agregar_M_02(armar_modo_02())
+                        juego.Escenario_Actual.pauso=False
+                    if i.objetivo=="salir":
+                        estrellasNIVEL=juego.estrellasNIVEL
+                        nivelActual=juego.nivelActual
+                        print(estrellasNIVEL)
+                        juego.Quitar_M_02()
+                        juego.Agregar_M_02(armar_modo_02())
+                    if i.objetivo=="continuar":
+                        estrellasNIVEL=juego.estrellasNIVEL
+                        nivelActual=juego.nivelActual
+                        juego.Quitar_M_02()
+                        juego.Agregar_M_02(armar_modo_02())
+                        desbloquear=True
+                        
+        elif not juego.Escenario_Actual.pauso and juego.Escenario_Actual.termino==False:
+            
             juego.Escenario_Actual.Monita_Musical.si_clickea()
             for i in juego.Escenario_Actual.Nenufares:
                 if i.nenufar_click():
@@ -755,11 +860,32 @@ def run_escenarios(juego):
                     yn=i.y+30
                     juego.Escenario_Actual.Sapo.jump(juego.screen,xn,yn)
                     juego.Escenario_Actual.Cartel.aumentar_palabra(i.palabra)
+                    
+                    juego.Escenario_Actual.num_pals=juego.Escenario_Actual.num_pals-1
             juego.Escenario_Actual.Cartel.iniciar_contador(juego.screen)
             juego.Escenario_Actual.Sapo.Croak()
+            
             for i in juego.Escenario_Actual.Botones:
                 i.func(juego)
-        else:
+            if juego.Escenario_Actual.num_pals==0:
+                txttmp=juego.Escenario_Actual.Cartel.textooriginal[0]+juego.Escenario_Actual.Cartel.textooriginal[1]+juego.Escenario_Actual.Cartel.textooriginal[2]+juego.Escenario_Actual.Cartel.textooriginal[3]+juego.Escenario_Actual.Cartel.textooriginal[4]
+                print(txttmp,"-----",juego.Escenario_Actual.Cartel.letra)
+                if juego.Escenario_Actual.Cartel.letra!=txttmp:
+                    juego.penalizacion+=1200
+                    juego.Cambiar_Escenario(0,3)
+                    juego.Quitar_M_02()
+                    juego.Agregar_M_02(armar_modo_02(juego.Escenario_Actual.Cartel.textooriginal))
+                    juego.Escenario_Actual.Cartel.numero_de_fotogramas=juego.Escenario_Actual.Cartel.numero_de_fotogramas+juego.penalizacion
+                else:
+                    if juego.Escenario_Actual.Cartel.numero_de_fotogramas<1500:
+                        juego.Escenario_Actual.estrellas=3
+                    if juego.Escenario_Actual.Cartel.numero_de_fotogramas<3000 and juego.Escenario_Actual.Cartel.numero_de_fotogramas >= 1500:
+                        juego.Escenario_Actual.estrellas=2
+                    if juego.Escenario_Actual.Cartel.numero_de_fotogramas<4499 and juego.Escenario_Actual.Cartel.numero_de_fotogramas >=3000:
+                        juego.Escenario_Actual.estrellas=1
+                    juego.penalizacion=0
+                    juego.Escenario_Actual.termino=True
+        elif juego.Escenario_Actual.termino==False:
             for i in juego.Escenario_Actual.scr_pause.Botones[1:]:
                 if True==i.func(juego):
                     if i.objetivo=="reiniciar":
@@ -775,4 +901,17 @@ def run_escenarios(juego):
                 sys.exit() #salir del juego
         for i in juego.Escenario_Actual.Botones:
             i.func(juego) 
-    
+            try:
+                if i.niv!=0:
+                    juego.nivelActual=i.niv
+            except:
+                print("no se puede")
+    if estrellasNIVEL!=0 and juego.Escenario_Actual.esc_niv==True:
+        for i in range (len(juego.Escenario_Actual.Botones)):
+            if juego.Escenario_Actual.Botones[i].objetivo==nivelActual:
+                juego.Escenario_Actual.Botones[i].update_image("Images/Recursos/nivel"+str(estrellasNIVEL)+"estrellas.png")
+                if desbloquear==True:
+                    juego.Escenario_Actual.Botones[i+1].dirige_a([0,3])
+                    juego.Escenario_Actual.Botones[i+1].niv=str(i+1)
+                    juego.Escenario_Actual.Botones[i+1].update_image("Images/Recursos/nivel0estrellas.png")
+                    desbloquear=False

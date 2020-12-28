@@ -10,6 +10,7 @@ class Escenario(pygame.sprite.Sprite):
         self.height = height
         self.Botones = []
         self.ID="esc"
+        self.esc_niv=False
     def update_image(self, ui):
         img = pygame.image.load(ui)
         self.image1 = img
@@ -42,7 +43,12 @@ class Modalidad_01(pygame.sprite.Sprite):
         self.Nivel = 1
         self.pauso = False
         self.scr_pause = None
+        self.scr_final = None
+        self.termino=False
+        self.estrellas=0
+        self.num_pals=5
         self.ID="mod3"
+        self.niv_num=0
     def agregar_nenufar(self, nenu):
         self.Nenufares.append(nenu)
     def update_image(self, ui):
@@ -68,6 +74,8 @@ class Modalidad_01(pygame.sprite.Sprite):
         self.Sapo.draw(buffer)
         if self.pauso:
             self.scr_pause.draw(buffer)
+        if self.termino:
+            self.scr_final.draw(buffer)
     def agregar_boton(self, bot):
         self.Botones.append(bot)
 

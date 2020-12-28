@@ -21,6 +21,8 @@ class Cartel(pygame.sprite.Sprite):
         pygame.font.init()
         temp = pygame.font.Font(None,45)
         self.texto = temp.render(self.letra,0,(0,0,0))
+        self.textooriginal=None
+        self.textoArmado=None
     #_________________________________________________Cambiar iamgen de boton
     def update_image(self, ui):
         img = pygame.image.load(ui)

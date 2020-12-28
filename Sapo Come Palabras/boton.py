@@ -24,6 +24,8 @@ class Boton(pygame.sprite.Sprite):
         self.esc_camb = None
         self.tipo = None
         self.objetivo=""
+        self.noButton=False
+        self.niv=0
     #_________________________________________________ORDEN
     def orden(self, objetivo):
         self.objetivo=objetivo
@@ -49,7 +51,8 @@ class Boton(pygame.sprite.Sprite):
                 return True
     #_________________________________________________Reproducir sonido
     def sound_p(self):
-        self.sound.play()
+        if not self.noButton:
+            self.sound.play()
     def agregar_direccion(self, temp):
         self.dirige = temp
     #_________________________________________________Funcion para manejar todo  el funciona miento de boton
@@ -61,6 +64,10 @@ class Boton(pygame.sprite.Sprite):
     def camb(self,juego):
         if self.esc_camb != None:
             juego.Cambiar_Escenario(self.esc_camb[0],self.esc_camb[1])
+            try:
+                juego.Escenario_Actual.niv_num=self.niv
+            except:
+                print("no va a nivel")
     def func(self,juego):
         mouse_pos = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
@@ -68,7 +75,8 @@ class Boton(pygame.sprite.Sprite):
             #Efecto agrandar boton
             if self.mouseOver==False:
                 self.sound_p()
-                self.update_size(self.width+5, self.height+5)
+                if not self.noButton:
+                    self.update_size(self.width+5, self.height+5)
                 self.mouseOver=True
             #Habilitar el click si no esta siendo presonado
             if False==click[0] and self.disableClick==True:
@@ -87,6 +95,8 @@ class Boton(pygame.sprite.Sprite):
                     juego.Escenario_Actual.pauso = False
                 elif self.tipo == 'exit':
                     juego.Escenario_Actual.pauso = False
+                elif self.tipo == 'termino':
+                    juego.Escenario_Actual.termino = True
                 else:
                     juego.Escenario_Actual.pauso = False
                     self.camb(juego)
@@ -104,6 +114,7 @@ class Boton(pygame.sprite.Sprite):
                 self.disableClick=False
             #Efecto desagrandar boton
             if self.mouseOver==True:
-                self.update_size(self.width-5, self.height-5)
+                if not self.noButton:
+                    self.update_size(self.width-5, self.height-5)
                 self.mouseOver=False
         return False

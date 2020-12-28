@@ -9,6 +9,10 @@ class Game(pygame.sprite.Sprite):
     tipo = 0
     Escenario_Actual = None
     screen = None
+    #------------ no sabia donde ponerlo asi que lo puse ahi, son las estrellas al terminanr un nivel
+    estrellasNIVEL=0
+    nivelActual=0
+    penalizacion=0
     def __init__(self, scr):
         self.screen = scr
     def Cambiar_Escenario(self, esc, tipo):
