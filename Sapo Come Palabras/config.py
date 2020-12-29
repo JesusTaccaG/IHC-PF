@@ -547,7 +547,7 @@ def armar_modo_00():
 #rana que salta
 def armar_modo_02(seed=None):
     mon_mus = Monita_Musical(50,50,100,100)
-    mon_mus.update_image('Images/Personajes/mensajero.png')
+    mon_mus.update_image('Images/Recursos/megafono.png')
     
     sap = Frog(170,370,80,80,"Images/Personajes/ranita.png")
     nenu_sapo = Boton(145,340,150,150)
